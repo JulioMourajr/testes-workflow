@@ -12,3 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - name: Print Hello World
+        run: echo "Hello, World!"
+        shell: bash
+  goodbye_world:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Print Goodbye World
+        run: echo "Goodbye, World!"
+        shell: bash
