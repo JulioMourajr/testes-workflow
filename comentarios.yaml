@@ -1,0 +1,16 @@
+name: Criar comentario com issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  criar_comentario:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Criar comentario na issue
+        run: |
+          echo "Adicionando um comentário à issue #${{ github.event.issue.number }}"
+          gh issue comment ${{ github.event.issue.number }} --body "Obrigado por abrir esta issue! Nossa equipe irá analisá-la em breve."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
