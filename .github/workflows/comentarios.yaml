@@ -1,15 +1,32 @@
-name: Criar comentario com issue
-
+name: comentario com a API do GitHub
 on:
-  issues:
-    types: [opened]
-
+  issue_comment:
+    types: [created]
 jobs:
-  criar_comentario:
+  comentario:
     runs-on: ubuntu-latest
     steps:
-      - name: mostrar github context
-        run: |
-          echo "${GITHUB_CONTEXT}" | jq .
-          echo "${{toJson(github.event)}}" | jq .
-        shell: bash 
+      - name: Responder a um comentário de issue
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const commentBody = context.payload.comment.body;
+            if (commentBody.includes('Olá')) {
+              const issueNumber = context.payload.issue.number;
+              await github.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: 'Olá! Obrigado pelo seu comentário.'
+              });
+            }
+            else if (commentBody.includes('Adeus')) {
+              const issueNumber = context.payload.issue.number;
+              await github.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                body: 'Adeus! Foi bom falar com você.'
+              });
+            }
