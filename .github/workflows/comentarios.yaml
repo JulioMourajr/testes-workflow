@@ -8,9 +8,8 @@ jobs:
   criar_comentario:
     runs-on: ubuntu-latest
     steps:
-      - name: Criar comentario na issue
+      - name: mostrar github context
         run: |
-          echo "Adicionando um comentário à issue #${{ github.event.issue.number }}"
-          gh issue comment ${{ github.event.issue.number }} --body "Obrigado por abrir esta issue! Nossa equipe irá analisá-la em breve."
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          echo "${GITHUB_CONTEXT}" | jq .
+          echo "${{toJson(github.event)}}" | jq .
+        shell: bash 
